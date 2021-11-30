@@ -29,14 +29,20 @@ class LogHistoryServicer(log_pb2_grpc.LogHistoryServicer):
         print(history)
         response = log_pb2.LogResponse()
         for h in history:
-            response.value.append(h)
+            x = h.split('_')
+            print(x)
+            x0 = x[0][1:]
+            x1 = x[1][:-1]
+            print(x0,x1)
+            response.value.append(int(x0))
+            response.value.append(int(x1))
 
         return response
 
 def on_message(client, obj, msg):
     print("ON message")
     print(f"TOPIC:{msg.topic}, VALUE:{msg.payload}")
-    history.append(int(msg.payload))
+    history.append(msg.payload.decode('utf-8'))
 
 
 class Subscriber():

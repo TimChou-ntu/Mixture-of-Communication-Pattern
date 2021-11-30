@@ -24,6 +24,8 @@ import fib_pb2_grpc
 import log_pb2
 import log_pb2_grpc
 
+import json
+
 
 # Create your views here.
 class EchoView(APIView):
@@ -53,7 +55,6 @@ class FiboView(APIView):
             fibPORT = "8080"
             host = f"{fibIP}:{fibPORT}"
             fiborder = serializer.data['order']
-            print(fiborder)
             with grpc.insecure_channel(host) as channel:
                 stub = fib_pb2_grpc.FibCalculatorStub(channel)
 
@@ -65,8 +66,10 @@ class FiboView(APIView):
                     # resdict.update(serializer.data)
                     # resdict['value'] = response.value
                     # res = FibResItemSerializer(data=resdict)
-                    self.client.publish(topic='log', payload=response.value)
-                    return Response({"status": "success", "data": response.value}, status=status.HTTP_200_OK)
+                    pay_load = str(fiborder)+'_'+str(response.value)
+                    print(pay_load)
+                    self.client.publish(topic='log', payload=json.dumps(pay_load))
+                    return Response({"order": fiborder, "answer": response.value}, status=status.HTTP_200_OK)
                     # if res.is_valid():
                     #     return Response({"status": "success", "data": res.data}, status=status.HTTP_200_OK)
                     # else:
@@ -99,7 +102,12 @@ class FiboView(APIView):
             try:
                 response = stub.getHistory(request)
                 # self.client.publish(topic='log', payload=response.value)
-                return Response({"status": "success", "data": response.value[:]}, status=status.HTTP_200_OK)
+                print(response)
+                
+                history_order = response.value[::2]
+                history_answer = response.value[1::2]
+                print(history_order,history_answer)
+                return Response({"history order": history_order, "history answer": history_answer}, status=status.HTTP_200_OK)
             except Exception as e:
                 print(e)
                 return Response({"status": "error", "data": "error"}, status=status.HTTP_400_BAD_REQUEST)
