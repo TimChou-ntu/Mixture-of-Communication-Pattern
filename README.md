@@ -62,10 +62,8 @@ and you should get
 {"history order":[10,20],"history answer":[55,6765]}
 ```
 ## Demo Video
-ifdef::env-github[]
-image:https://imgur.com/a/22y8YqG[link=https://youtu.be/cyQAdSCKwuM]
-endif::[]
 
-ifndef::env-github[]
-video::rAteGra5-xM[youtube]
-endif::[]
+https://user-images.githubusercontent.com/67358795/143999587-c526e6bf-1bee-4c3e-9290-e9e7981621aa.mp4
+
+
+https://youtu.be/cyQAdSCKwuM
