@@ -57,7 +57,7 @@ curl -X POST -H "Content-Type: application/json" http://127.0.0.1:8000/rest/fibo
 # get order history & answer history
 curl http://localhost:8000/rest/logs
 ```
-and you should get
+- result:
 ```
 {"history order":[10,20],"history answer":[55,6765]}
 ```
