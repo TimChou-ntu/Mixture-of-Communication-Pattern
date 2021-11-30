@@ -18,7 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('hide/', admin.site.urls),
-    path('rest/', include('tutorial.urls')),
-    path('rest/', include('fibonacci.urls')),
-    path('rest/', include('logs.urls')),
+    path('rest/', include('tutorial.urls'))
 ]
